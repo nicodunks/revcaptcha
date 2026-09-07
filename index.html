@@ -17,10 +17,8 @@ p{font-size:19px;font-weight:500;line-height:1.3;margin:0 0 24px}
 .box{width:28px;height:28px;border:2px solid #C1C1C1;border-radius:2px;background:#fff;display:grid;place-items:center;cursor:pointer}
 .box:hover{border-color:#8a8a8a}
 .box svg{width:22px;display:none}
-[data-s=spin] .box{border-color:transparent}[data-s=spin] .box:after{content:"";width:22px;height:22px;border:3px solid var(--line);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite}
 [data-s=ok] .box{border-color:transparent}[data-s=ok] .box svg{display:block}
 .brand{margin-left:auto;text-align:center;font-size:8px;color:#555;line-height:1.3}.brand .mark{width:26px;height:26px;margin:0 auto 2px}.brand .mark:after{inset:7px}
-@keyframes spin{to{transform:rotate(1turn)}}
 #c{border:1px solid var(--line);border-radius:6px;margin-bottom:18px;overflow:hidden;display:none}#c[data-open]{display:block}
 .head{background:var(--blue);color:#fff;padding:14px 18px;display:flex;align-items:baseline;font-size:17px;font-weight:500}
 .head b{font-weight:700}#t{margin-left:auto;font:500 15px var(--mono);font-variant-numeric:tabular-nums}
@@ -120,7 +118,7 @@ function finish(ok){
   v.className='bad'; v.innerHTML='<strong>Verification failed</strong><span>Human detected.</span><a href="#" id="again">Try again</a>'; v.setAttribute('data-show','');
   $('#again').onclick=e=>{e.preventDefault();render()};
 }
-function start(){ if(rc.dataset.s==='ok')return; rc.dataset.s='spin'; order=shuf(D.map((_,k)=>k)); i=0; setTimeout(()=>{c.setAttribute('data-open','');render()},500); }
+function start(){ if(rc.dataset.s==='ok')return; order=shuf(D.map((_,k)=>k)); i=0; c.setAttribute('data-open',''); render(); }
 $('#box').onclick=$('#lbl').onclick=start; $('#box').onkeydown=e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();start()}};
 go.onclick=()=>{ if(!pick)return; finish(pick.dataset.w===cur[1][0][0]); };
 $('#new').onclick=()=>{ if(c.hasAttribute('data-open')&&rc.dataset.s!=='ok')render(); };
