@@ -29,7 +29,7 @@ p{font-size:22px;max-width:30ch;font-weight:500;line-height:1.3;text-wrap:balanc
 .tk{padding:1px 5px;border-radius:3px;white-space:pre}.tk i{font-style:normal;color:var(--ink3);opacity:.7}
 .q{background:none;border:1px dashed var(--ink3);color:var(--ink3);animation:blink 1s steps(2) infinite}@keyframes blink{50%{opacity:.35}}
 #g{display:grid;grid-template-columns:repeat(20,1fr);gap:1px;background:var(--soft);border-bottom:1px solid var(--soft)}
-#g button{font:400 10px var(--mono);font-variant-numeric:tabular-nums;padding:0 1px;height:34px;border:0;background:var(--card);cursor:pointer;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#g button{font:400 10px var(--mono);font-variant-numeric:tabular-nums;padding:0 1px;height:34px;border:0;background:var(--card);cursor:pointer;color:var(--ink);overflow:hidden;text-overflow:clip;white-space:nowrap}
 #g button:hover{background:var(--tint)}#g .sel{background:var(--blue);color:#fff}
 [data-done] #g button{cursor:default;pointer-events:none}[data-done] #g .f{color:var(--line)}[data-done] #g .w{font-weight:600;font-size:9px;letter-spacing:-.02em}
 #g .ok,#g .no{color:#fff!important}#g .ok{background:var(--green)}#g .no{background:var(--red)}
@@ -97,14 +97,14 @@ const D=[
 const $=s=>document.querySelector(s), rc=$('#rc'), c=$('#c'), g=$('#g'), p=$('#p'), r=$('#r'), v=$('#v'), t=$('#t'), bar=$('#bar'), go=$('#go');
 const LIMIT=5000; let cur, pick, timer, order=[], i=0;
 const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;'), sp=s=>esc(s).replace(/ /g,'<i>␣</i>').replace(/\n/g,'<i>⏎</i>');
-const id=s=>{let h=7;for(const ch of s)h=(h*31+ch.charCodeAt(0))>>>0;return 1000+h%49000};
+const id=s=>{let h=7;for(const ch of s)h=(h*31+ch.charCodeAt(0))>>>0;return 1000+h%9000};
 const pct=x=>(x*100).toFixed(x<.01?3:1)+'%';
 const shuf=a=>{for(let j=a.length-1;j>0;j--){const k=Math.random()*(j+1)|0;[a[j],a[k]]=[a[k],a[j]]}return a};
 function render(){
   cur=D[order[i++%D.length]]; pick=null; c.removeAttribute('data-done'); r.removeAttribute('data-show'); v.removeAttribute('data-show'); go.style.visibility='';
   p.innerHTML=cur[0].match(/ ?[\w']+|\s|[^\w\s']/g).map((w,k)=>`<span class="tk" style="background:hsl(${(k*47)%360} 70% 92%)">${sp(w)}</span>`).join('')+'<span class="tk q">?</span>';
   const known=[...cur[1],...cur[2].map(w=>[w,1e-5])].map(([w,pr])=>[w,pr,id(w)]), used=new Set(known.map(k=>k[2])), cells=[...known];
-  while(cells.length<160){const n=1000+Math.random()*49000|0; if(!used.has(n)){used.add(n);cells.push(['',0,n])}}
+  while(cells.length<160){const n=1000+Math.random()*9000|0; if(!used.has(n)){used.add(n);cells.push(['',0,n])}}
   g.innerHTML=shuf(cells).map(k=>`<button data-w="${esc(k[0])}" data-p="${k[1]}" class="${k[0]?'':'f'}">${k[2]}</button>`).join('');
   g.querySelectorAll('button').forEach(b=>b.onclick=()=>{g.querySelector('.sel')?.classList.remove('sel');b.classList.add('sel');pick=b});
   const t0=performance.now(); clearInterval(timer);
