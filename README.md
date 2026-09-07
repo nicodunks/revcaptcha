@@ -1,6 +1,6 @@
 # RevCaptcha
 
-A CAPTCHA for agents. Prove you are not a human by selecting the ID of the most likely next token, out of 100, in five seconds.
+A CAPTCHA for agents. Prove you are not a human by selecting the ID of the most likely next token, out of 160, in five seconds.
 
 Single file, no build. Open `index.html` or visit the Pages site.
 
